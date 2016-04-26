@@ -1,0 +1,56 @@
+<!doctype html>
+<html ng-app="app">
+  <head>
+    <script src="node_modules/angular/angular.min.js"></script>
+    <script src="node_modules/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="node_modules/ui-select/dist/select.min.js"></script>
+    <script src="js/script.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="node_modules/uswds/dist/css/uswds.min.css">
+    <link rel="stylesheet" href="node_modules/ui-select/dist/select.min.css">
+    <link rel="stylesheet" href="node_modules/selectize/dist/css/selectize.css">
+  </head>
+  <body>
+    <div ng-controller="ctrl">
+    <div class="usa-grid">
+    <div class="usa-width-one-whole">
+      <div ng-show="tab == 'intro'">
+          <h1>Hey There.</h1>
+          <h2>
+          Ever wonder if you are one in a million? Find out by taking this quiz. 
+          After every answer, we'll tell you what the odds are 
+          that another American is like you, based on a survey of 15 million
+          Americans run by the U.S. Census Bureau.
+          </h2>
+          <div id="im-game-container" class="center"><div class="action-container">
+            <button id="im-game" class="usa-button-big big-text" type="button" ng-click="tab='quiz'">
+            I'm game.
+            </button>
+          </div></div>
+      </div>
+
+      <div ng-show="tab == 'quiz'">
+          <h1>1 in 1</h1>
+          <!--
+          <h2>You're an American, like 100% of the people surveyed. That makes you 1 in 1. Note: sorry if you're not an American! We only have data for the US. Want better results? Tell us what sex you are.</h2>
+          !-->
+          <div class="center">
+            <div class="action-container">
+              <p>Selected: {{this[selection].selected}}</p>
+              <ui-select ng-model="this[selection].selected" theme="selectize" autofocus="true" on-select="toQuestion('race')">
+                <ui-select-match placeholder="{{placeholders[question]}}">{{$select.selected.name}}</ui-select-match>
+                <ui-select-choices repeat="selection1 in this[question] | filter: $select.search">
+                  <span ng-bind-html="selection1.name | highlight: $select.search"></span>
+                </ui-select-choices>
+              </ui-select>
+          </div></div>
+      </div>
+    </div></div>
+    </div>
+    <footer>
+      <div class="usa-grid">
+          <div class="usa-width-one-whole">
+      <h4>A project by <a href="http://www.anthonygarvan.com">Anthony Garvan</a>.</h4>
+    </footer>
+  </body>
+</html>
