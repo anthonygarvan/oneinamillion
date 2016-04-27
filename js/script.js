@@ -5,21 +5,81 @@ var app = angular.module('app', ['ngSanitize', 'ui.select']);
 angular.module('app')
 .controller('ctrl', ['$scope', '$http', function ($scope, $http){
     $scope.tab = 'intro';
-    $scope.placeholders = {'sex': 'Are you male or female?', 'race': "What race do you most identify with?"}
+    $scope.prompts = {sex: {placeholder: "I'm...", prompt: "Are you male or female?"}, 
+                          race: {placeholder: "I identify as..", prompt: "What race do you most identify with?"},
+                          education: {placeholder: "I've been through...",
+                                      prompt: "What is you highest level of schooling?"},
+                          job: {placeholder: "I'm an...", prompt: "What is your job?"}}
 
     function getCode(name) {
       $http.get(`/data/codes/${name}.json`)
         .then(function(response) {
           $scope[`${name}Selection`] = {};
           $scope[name] = response.data;
-        })
+      })
     }
 
-    $scope.toQuestion = function(name) {
+    $scope.formatNumber = function(value) {
+      return (value.toFixed(0) + '.').replace(/(\d)(?=(\d{3})+\.)/g, "$1,").replace('.', '');
+    }
+
+    $scope.odds = 1;
+    var jobs;
+    function getOdds(answers) {
+      if(answers.length <= (questions.length - 1)) {
+        $http.get(`/data/stats/${answers.join('-')}.json`)
+          .then(function(response) {
+              if(response.status == 200) {
+                $scope.odds = $scope.formatNumber($scope.total / response.data.count);
+                if(answers.length == (questions.length - 1)) {
+                  jobs = response.data;
+                }
+              } else {
+                $scope.snowflake = true;
+                $scope.tab = "results";
+              }
+        })
+        } else {
+            var job = answers[questions.length-1];
+            if(job in jobs) {
+              $scope.odds = $scope.formatNumber($scope.total / jobs[job].count);
+            } else {
+              $scope.snowflake = true;
+              $scope.tab = "results";
+            }
+        }
+    }
+
+    var questions = ['sex', 'race', 'education', 'job'];
+    $scope.answers = [];
+    $scope.toQuestion = function(qNum) {
+          var name = questions[qNum];
           getCode(name);
           $scope.question = name;
           $scope.selection = `${name}Selection`;
+          if(qNum < questions.length - 1) {
+            $scope.next = function(){ 
+              $scope.answers.push($scope[$scope.selection].selected.code);
+              getOdds($scope.answers);
+              $scope.toQuestion(qNum +1)
+          };
+          } else {
+            $scope.next = function() {
+              $scope.answers.push($scope[$scope.selection].selected.code);
+              getOdds($scope.answers);
+              $scope.tab = 'results'
+            }
+          }
     };
+    $scope.goAgain = function() {
+      $scope.answers = [];
+      $scope.tab = 'quiz'
+      $scope.toQuestion(0);
+    }
 
-    $scope.toQuestion('sex');
+    $http.get(`/data/stats/total.json`)
+        .then(function(response) {
+          $scope.total = response.data.count;
+      });
+    $scope.toQuestion(0);
 }]);

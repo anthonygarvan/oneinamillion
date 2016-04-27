@@ -17,8 +17,18 @@ footer {
 	text-align: left;
 }
 
-#im-game {
+.question-container {
+    width: 50rem;
+    text-align: left;
+    margin: 0 auto;
+}
+
+#im-game, #again {
 	font-size: 3rem;
+}
+
+#one-in-a {
+    font-size: 8rem;
 }
 
 div.selectize-dropdown, div.selectize-input, div.selectize-input input {

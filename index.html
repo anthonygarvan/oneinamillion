@@ -30,22 +30,44 @@
       </div>
 
       <div ng-show="tab == 'quiz'">
-          <h1>1 in 1</h1>
           <!--
           <h2>You're an American, like 100% of the people surveyed. That makes you 1 in 1. Note: sorry if you're not an American! We only have data for the US. Want better results? Tell us what sex you are.</h2>
           !-->
           <div class="center">
-            <div class="action-container">
-              <p>Selected: {{this[selection].selected}}</p>
-              <ui-select ng-model="this[selection].selected" theme="selectize" autofocus="true" on-select="toQuestion('race')">
-                <ui-select-match placeholder="{{placeholders[question]}}">{{$select.selected.name}}</ui-select-match>
+            <div class="question-container">
+              <h1 id="one-in-a">1 in {{ odds }}</h1>
+              <h3>{{ prompts[question].prompt }}</h3>
+              <ui-select ng-model="this[selection].selected" theme="selectize" autofocus="true" on-select="next()">
+                <ui-select-match placeholder="{{prompts[question].placeholder}}">{{$select.selected.name}}</ui-select-match>
                 <ui-select-choices repeat="selection1 in this[question] | filter: $select.search">
                   <span ng-bind-html="selection1.name | highlight: $select.search"></span>
                 </ui-select-choices>
               </ui-select>
           </div></div>
       </div>
+
+      <div ng-show="tab == 'results'">
+          <div class="center">
+            <div class="action-container">
+            <div ng-show="!snowflake">
+              <h1>You're 1 in {{ odds }}!</h1>
+              <h2>Yay diversity!</h2>
+            </div>
+            <div ng-show="snowflake">
+              <h1>You're super special snowflake!</h1>
+              <h2>Out of all the {{ formatNumber(total) }} people surveyed, there wasn't anyone like you.
+                  Yay diversity!</h2>
+            </div>
+            <div id="go-again-container" class="center"><div class="action-container">
+              <button id="again" class="usa-button-big big-text" type="button" ng-click="goAgain()">
+              Again!
+              </button>
+            </div></div>
+            </div></div>
+      </div>
     </div></div>
+
+
     </div>
     <footer>
       <div class="usa-grid">
