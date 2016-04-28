@@ -79,6 +79,7 @@ angular.module('app')
       $scope.answers = [];
       $scope.odds = 1;
       $scope.tab = 'quiz'
+      $scope.snowflake = false;
       $scope.toQuestion(0);
     }
 
