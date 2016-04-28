@@ -9,6 +9,17 @@
     <link rel="stylesheet" href="node_modules/uswds/dist/css/uswds.min.css">
     <link rel="stylesheet" href="node_modules/ui-select/dist/select.min.css">
     <link rel="stylesheet" href="node_modules/selectize/dist/css/selectize.css">
+
+    <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+          
+            ga('create', 'UA-38185442-3', 'auto');
+            ga('send', 'pageview');
+          
+    </script>
   </head>
   <body>
     <div ng-controller="ctrl">
@@ -17,9 +28,9 @@
       <div ng-show="tab == 'intro'">
           <h1>Hey There.</h1>
           <h2>
-          Ever wonder if you are one in a million? Find out by taking this quiz. 
+          Ever feel like you are one in a million? Find out by taking this quiz. 
           After every answer, we'll tell you what the odds are 
-          that another American is like you, based on a survey of 15 million
+          that another American is like you, based on a survey of {{ this.formatNumber(total) }}
           Americans run by the U.S. Census Bureau.
           </h2>
           <div id="im-game-container" class="center"><div class="action-container">
@@ -30,9 +41,6 @@
       </div>
 
       <div ng-show="tab == 'quiz'">
-          <!--
-          <h2>You're an American, like 100% of the people surveyed. That makes you 1 in 1. Note: sorry if you're not an American! We only have data for the US. Want better results? Tell us what sex you are.</h2>
-          !-->
           <div class="center">
             <div class="question-container">
               <h1 id="one-in-a">1 in {{ odds }}</h1>
@@ -48,17 +56,18 @@
 
       <div ng-show="tab == 'results'">
           <div class="center">
-            <div class="action-container">
+            <div class="results-container">
             <div ng-show="!snowflake">
               <h1>You're 1 in {{ odds }}!</h1>
-              <h2>Yay diversity!</h2>
             </div>
             <div ng-show="snowflake">
-              <h1>You're super special snowflake!</h1>
+              <h1>You're a special snowflake!</h1>
               <h2>Out of all the {{ formatNumber(total) }} people surveyed, there wasn't anyone like you.
-                  Yay diversity!</h2>
+              </h2>
             </div>
-            <div id="go-again-container" class="center"><div class="action-container">
+            <h3><strong>You're weird.</strong> But so is everyone else. In fact, over 10% of the US is "one in a million"
+            as measured by these six questions. #yaydiversity</h3> 
+            <div id="go-again-container" class="center"><div class="results-container">
               <button id="again" class="usa-button-big big-text" type="button" ng-click="goAgain()">
               Again!
               </button>

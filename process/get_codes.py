@@ -64,10 +64,12 @@ def get_codes_for_age():
 	f.close()
 
 if __name__ == '__main__':
-	get_codes_for_field('RAC1P 1', 'race')
 	get_codes_for_field('SEX 1', 'sex')
+	get_codes_for_field('RAC1P 1', 'race')
+	get_codes_for_field('HISP 2', 'hispanic')
 	get_codes_for_field('SCHL 2', 'education')
-	get_codes_for_field('SOCP12 6', 'job', get_job)
 	get_codes_for_field('ST 2', 'state', get_state)
+	get_codes_for_field('SOCP12 6', 'job', get_job)
+
 	#get_codes_for_age()
 	

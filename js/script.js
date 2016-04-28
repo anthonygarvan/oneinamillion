@@ -6,7 +6,8 @@ angular.module('app')
 .controller('ctrl', ['$scope', '$http', function ($scope, $http){
     $scope.tab = 'intro';
     $scope.prompts = {sex: {placeholder: "I'm...", prompt: "Are you male or female?"}, 
-                      race: {placeholder: "I identify as..", prompt: "What race do you most identify with?"},
+                      race: {placeholder: "I identify as...", prompt: "What race do you most identify with?"},
+                      hispanic: {placeholder: "I'm from...", prompt: "Do you have a Hispanic origin?"},
                       education: {placeholder: "I've been through...",
                                   prompt: "What is your highest level of schooling?"},
                       state: {placeholder: "I live in...", prompt: "What State do you live in?"},
@@ -21,7 +22,10 @@ angular.module('app')
     }
 
     $scope.formatNumber = function(value) {
-      return (Math.round(value).toFixed(0) + '.').replace(/(\d)(?=(\d{3})+\.)/g, "$1,").replace('.', '');
+      if(value < 10 && (Math.round(10*value) % 10) !== 0) {
+        return value.toFixed(1);
+      }
+      return (value.toFixed(0) + '.').replace(/(\d)(?=(\d{3})+\.)/g, "$1,").replace('.', '');
     }
 
     $scope.odds = 1;
@@ -50,7 +54,7 @@ angular.module('app')
         }
     }
 
-    var questions = ['sex', 'race', 'education', 'state', 'job'];
+    var questions = ['sex', 'race', 'hispanic', 'education', 'state', 'job'];
     $scope.answers = [];
     $scope.toQuestion = function(qNum) {
           var name = questions[qNum];
@@ -78,6 +82,7 @@ angular.module('app')
       $scope.toQuestion(0);
     }
 
+    $scope.total = 1;
     $http.get(`/data/stats/total.json`)
         .then(function(response) {
           $scope.total = response.data.count;

@@ -5,6 +5,7 @@ from statistics import median, mean, stdev
 
 fields = ['SEX',
 		  'RAC1P',
+		  'HISP',
 		  'SCHL',
 		  'ST',
 		  'SOCP12']
@@ -36,7 +37,7 @@ def read_pums(debug=False):
 
 def get_counts():
 	result = {}
-	for key in read_pums(True):
+	for key in read_pums():
 		for i in range(0,len(fields) + 1):
 			sub_key = key[0:i]
 			if sub_key not in result:

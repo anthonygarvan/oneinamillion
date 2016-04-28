@@ -18,8 +18,14 @@ footer {
 }
 
 .question-container {
-    width: 50rem;
+    width: 60rem;
     text-align: left;
+    margin: 0 auto;
+}
+
+.results-container {
+    text-align: left;
+    width: 60rem;
     margin: 0 auto;
 }
 
