@@ -14,7 +14,7 @@ angular.module('app')
                       job: {placeholder: "I'm an...", prompt: "What is your job?"}}
 
     function getCode(name) {
-      $http.get(`/data/codes/${name}.json`)
+      $http.get(`data/codes/${name}.json`)
         .then(function(response) {
           $scope[`${name}Selection`] = {};
           $scope[name] = response.data;
@@ -32,7 +32,7 @@ angular.module('app')
     var jobs;
     function getOdds(answers) {
       if(answers.length <= (questions.length - 1)) {
-        $http.get(`/data/stats/${answers.join('-')}.json`)
+        $http.get(`data/stats/${answers.join('-')}.json`)
           .then(function(response) {
                 $scope.odds = $scope.formatNumber($scope.total / response.data.count);
                 if(answers.length == (questions.length - 1)) {
@@ -83,7 +83,7 @@ angular.module('app')
     }
 
     $scope.total = 1;
-    $http.get(`/data/stats/total.json`)
+    $http.get(`data/stats/total.json`)
         .then(function(response) {
           $scope.total = response.data.count;
       });
