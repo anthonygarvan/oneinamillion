@@ -6,6 +6,7 @@ from statistics import median, mean, stdev
 fields = ['SEX',
 		  'RAC1P',
 		  'SCHL',
+		  'ST',
 		  'SOCP12']
 
 def read_pums(debug=False):
@@ -28,15 +29,15 @@ def read_pums(debug=False):
 		if i % 100000 == 0:
 			print('Reading line %d' % i)
 
-		if debug and i == 200000:
+		if debug and i == 1000000:
 			break
 
 	f.close()
 
 def get_counts():
 	result = {}
-	for key in read_pums():
-		for i in range(0,5):
+	for key in read_pums(True):
+		for i in range(0,len(fields) + 1):
 			sub_key = key[0:i]
 			if sub_key not in result:
 				result[sub_key] = 1
@@ -44,17 +45,40 @@ def get_counts():
 				result[sub_key] += 1
 	return result
 
+def get_rare_stats(counts):
+	total = 0
+	for key in counts:
+		if len(key) == len(fields):
+			total += counts[key]
+
+	thresholds = (10**3, 10**4, 10**5, 10**6)
+	total_rare = dict.fromkeys(thresholds, 0)
+	for key in counts:
+		if len(key) == len(fields):
+			for threshold in thresholds:
+				if (total / counts[key]) > threshold:
+					total_rare[threshold] += counts[key]
+
+	formatted = []
+	for threshold in total_rare:
+		formatted.append({"threshold": threshold, "count": total_rare[threshold], 
+			"percentage": total_rare[threshold] / total})
+	
+	f = open('data/stats/totalRare.json', 'w')
+	json.dump(formatted, f)
+	f.close()
+
 def save_counts(counts):
 	reformatted = {}
 	for key in counts:
-		file_name = '-'.join(key[:3]) if len(key) > 0 else 'total'
+		file_name = '-'.join(key[:(len(fields) -1)]) if len(key) > 0 else 'total'
 		if file_name not in reformatted:
-			if len(key) < 4:
+			if len(key) < len(fields):
 				reformatted[file_name] = {"count": counts[key]}
 	for key in counts:
-		if(len(key) == 4):
-			file_name = '-'.join(key[:3])
-			reformatted[file_name][key[3]] = {"count": counts[key]}
+		if(len(key) == len(fields)):
+			file_name = '-'.join(key[:(len(fields) - 1)])
+			reformatted[file_name][key[(len(fields)-1)]] = {"count": counts[key]}
 		
 	for file_name in reformatted:
 		f = open('data/stats/%s.json' % file_name, 'w')
@@ -64,3 +88,4 @@ def save_counts(counts):
 if __name__ == '__main__':
 	counts = get_counts()
 	save_counts(counts)
+	get_rare_stats(counts)
