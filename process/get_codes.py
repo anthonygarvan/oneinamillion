@@ -32,7 +32,7 @@ def get_state(part):
 def get_name_default(part):
 	return part.strip('.').strip()
 
-def get_codes_for_field(field_name, file_name, get_name=get_name_default):
+def get_codes_for_field(field_name, file_name, get_name=get_name_default, sort_by='code'):
 	f = open('data/raw/codes.txt')
 	codes = []
 	block_start = False
@@ -48,6 +48,7 @@ def get_codes_for_field(field_name, file_name, get_name=get_name_default):
 			codes.append({"code": code, "name": name})
 	f.close()
 
+	codes = sorted(codes, key=lambda c: c[sort_by])
 	f = open('data/codes/%s.json' % file_name, 'w')
 	json.dump(codes, f)
 	f.close()
@@ -69,7 +70,7 @@ if __name__ == '__main__':
 	get_codes_for_field('HISP 2', 'hispanic')
 	get_codes_for_field('SCHL 2', 'education')
 	get_codes_for_field('ST 2', 'state', get_state)
-	get_codes_for_field('SOCP12 6', 'job', get_job)
+	get_codes_for_field('SOCP12 6', 'job', get_job, sort_by='name')
 
 	#get_codes_for_age()
 	
