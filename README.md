@@ -2,8 +2,8 @@
 
 #### A census-powered quiz for exploring your uniqueness
 
-This is an online quiz powered by 2009-2013 [American Community Survey (ACS)](https://www.census.gov/programs-surveys/acs/) provided by the U.S. Census.
-Users are guided through a series of question, and after each question they are told how unique they are
+This is an online quiz powered by 2009-2013 [American Community Survey (ACS)](https://www.census.gov/programs-surveys/acs/) provided by the U.S. Census Bureau.
+Users are guided through a series of questions, and after each question they are told how unique they are
 (1 in 200, 1 in 10,000, etc.)
 
 ### Method
