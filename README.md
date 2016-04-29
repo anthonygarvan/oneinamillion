@@ -1,6 +1,6 @@
 # One in a Million
 
-#### A census-powered quiz for weirdos
+#### An online quiz, powered by the U.S. Census
 
 This is an online quiz powered by 2009-2013 [American Community Survey (ACS)](https://www.census.gov/programs-surveys/acs/) provided by the U.S. Census Bureau.
 Users are guided through a series of questions, and after each question they are told how unique they are
