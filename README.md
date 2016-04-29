@@ -1,6 +1,6 @@
 # One in a Million
 
-#### A census-powered quiz for exploring your uniqueness
+#### A census-powered quiz for weirdos
 
 This is an online quiz powered by 2009-2013 [American Community Survey (ACS)](https://www.census.gov/programs-surveys/acs/) provided by the U.S. Census Bureau.
 Users are guided through a series of questions, and after each question they are told how unique they are
@@ -13,6 +13,11 @@ The code uses a simple methodology: it counts the number of occurrences of a par
 America is a very diverse place. In fact, by only the simple demographics contained in this survey (sex, race, hispanic origin, education, state, and employment), over 13.6% of Americans are "one in a million."
 
 ### Running the code on mac. 
+Requirements: 
+- nodejs
+- python3.x
+
+Then run:
 ```bash
 $ brew update
 $ brew install p7zip
@@ -21,4 +26,12 @@ $ python process/get_codes.py
 $ python process/get_counts.py
 ```
 
-Then serve with your favorite static file server (I use node `http-server`). 
+Then serve with your favorite static file server (I use node's `http-server`). 
+
+## Public domain
+
+This project is in the worldwide [public domain](LICENSE.md). As stated in [CONTRIBUTING](CONTRIBUTING.md):
+
+> This project is in the public domain within the United States, and copyright and related rights in the work worldwide are waived through the [CC0 1.0 Universal public domain dedication](https://creativecommons.org/publicdomain/zero/1.0/).
+>
+> All contributions to this project will be released under the CC0 dedication. By submitting a pull request, you are agreeing to comply with this waiver of copyright interest.

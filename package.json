@@ -1,13 +1,13 @@
 {
   "name": "oneinamillion",
   "version": "1.0.0",
-  "description": "A tool for analyzing wages by job, state, race, gender, age and education, from US Census data.",
+  "description": "A census-powered online quiz for weirdos",
   "main": "script.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "MIT",
+  "license": "CC0",
   "dependencies": {
     "angular": "^1.5.5",
     "angular-sanitize": "^1.5.5",
