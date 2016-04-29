@@ -10,9 +10,9 @@ Users are guided through a series of questions, and after each question they are
 
 The code uses a simple methodology: it counts the number of occurrences of a particular combination of demographic parameters in the PUMS data set, which contains anonymized individual-level data. The only caveat I have is that I ignore individuals who did not have complete information (in practice, this only occurred when the job field, `SOCP12`, was blank). This reduces the sample size from about 15 million to about 9 million. 
 
-America is a very diverse place. In fact, by only the simple demographics contained in this survey (sex, race, hispanic origin, education, state, and employment), over 13.6% of Americans are "one in a million."
+America is a very diverse place. In fact, by only the simple demographics contained in this survey (sex, race, hispanic origin, education, state, and employment), 13.6% of Americans are "one in a million."
 
-### Running the code on mac. 
+### Running the code on MacOS
 Requirements: 
 - nodejs
 - python3.x
